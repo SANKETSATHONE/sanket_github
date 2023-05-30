@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container">
+        <ul class="nav nav-tabs">
+            <li role="presentation" class="active"><a href="/sign_in">
+                    <h2>Home page </h2>
+                </a></li>
+            <li role="presentation"><a href="/sign_up">
+                    <h2> Sign up </h2>
+                </a></li>
+            <li role="presentation"><a href="/leave">
+                    <h2> Apply leave </h2>
+                </a></li>
+        </ul>
+
+        <br>
+        <form>
+            {% csrf_token %}
+            <h1>Name - {{form.first_name}}</h1>
+            <img src="{{ upload/1.url }}" alt="Smiley face" width="250" height="250">
+            <br />
+            
+
+            <table class="table table-bordered">
+                <tr>
+                    <th>profile photo</th>
+                    <th>emp_id </th>
+                    <th>first_name</th>
+                    <th>last name</th>
+                    <th>Email</th>
+
+                </tr>
+                <tr>
+                    <td>{{form.emp_image}}</td>
+                    <td>{{form.emp_id}}</td>
+                    <td>{{form.first_name}}</td>
+                    <td>{{form.last_name}}</td>
+                    <td>{{form.email}}</td>
+                </tr>
+            </table>
+            <table class="table table-bordered">
+
+                <tr>
+                    <th>Department</th>
+                    <th>role</th>
+                    <th>marital_status </th>
+                    <th>fy_year</th>
+
+
+                </tr>
+                <tr>
+                    <td>{{form.department}}</td>
+                    <td>{{form.role}}</td>
+                    <td>{{form.marital_status}}</td>
+                    <td>{{form.fy_year}}</td><br>
+
+                </tr>
+            </table>
+            <table class="table table-bordered">
+
+                <tr>
+                    <th>gender</th>
+                    <th>total_leave_balance</th>
+                    <th>designation</th>
+                    <th>reporting_manager_name</th>
+                </tr>
+                <tr>
+                    <td>{{form.gender}}</td>
+                    <td>{{form.leave_balance.total_leave_balance}}</td>
+                    <td>{{form.designation}}</td>
+                    <td>{{form.reporting_manager_name}}</td>
+                </tr>
+            </table>
+
+            </table>
+
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
