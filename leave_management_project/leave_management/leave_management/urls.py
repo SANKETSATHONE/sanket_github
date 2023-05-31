@@ -1,7 +1,7 @@
 
 from django.contrib import admin
 from django.urls import path
-from employee.views import sign_up_user, sign_in_user, logout_user, user_leave, apply_leave, get_leave, change_password, profile_page, holiday_list, edit_all_user, edit_user
+from employee.views import sign_up_user, sign_in_user, logout_user, user_leave, apply_leave, get_leave, change_password, profile_page, holiday_list, edit_all_user, edit_user, manager_emp_list
 
 
 urlpatterns = [
@@ -15,6 +15,8 @@ urlpatterns = [
     path("profile/<str:id>", profile_page),
     path("holiday/",holiday_list),
     path("edit_all_user/",edit_all_user),
-    path("edit/<str:id>",edit_user)
+    path("edit/<str:id>",edit_user),
+    path("emp_list",manager_emp_list),
+
 ]
 

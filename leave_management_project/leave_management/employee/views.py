@@ -42,15 +42,6 @@ def sign_in_user(request):
 
             if result:
                 login(request,result)
-                # response = redirect("/profile")
-                # return response
-                # redirect("/profile/<str:pk>", pk=user)
-                # print("user.username",OurUser.emp_id)
-                # for i in OurUser.objects.filter(username=request.POST["username"]):
-                #     id=i.emp_id
-                #     print("id------->", id)
-                # print("ouruser.first ----->", OurUser.first_name)
-                # return redirect(reverse("profile",kwargs={'str':id}))
                 return HttpResponseRedirect("/profile/<str:id>".format(id=id))
                 
             else:
@@ -70,8 +61,7 @@ def logout_user(request):
 
 # @login_required(login_url='/signin.html')
 def user_leave(request):
-    # print("reqest.user",request.user)
-    # print("request.user.username",request.user)
+
     data_leave = OurUser.objects.select_related("leave").filter(username=request.user)
     
             
@@ -96,17 +86,19 @@ def get_leave(request):
         for i in data_leave:
             print(i.leave.leave_type)
             if request.POST["leave_type"]== "SICK_LEAVE":
-                # print("sick_leave applied")
-                # print("i.no of leaves-->",request.POST["number_of_leaves"])
+                if i.leave_balance.sick_leave_balance == 0:
+                    return HttpResponse("sick leave balance is zero")
                 i.leave.sick_leave = request.POST["number_of_leaves"]
-                # print("sick_leave---->", i.leave.sick_leave)
-                # print("sick_leave_blance",i.leave_balance.sick_leave_balance )
                 i.leave_balance.sick_leave_balance -= int(i.leave.sick_leave)
             if request.POST["leave_type"] == "CASUAL_LEAVE":
                 print("casual-->", i.leave.casual_leave)
+                if i.leave_balance.casual_leave_balance == 0:
+                    return HttpResponse("casual leave balance is zero")
                 i.leave.casual_leave = request.POST["number_of_leaves"]
                 i.leave_balance.casual_leave_balance -= int(i.leave.casual_leave)
             if request.POST["leave_type"] == "PRIVILAGED_LEAVE":
+                if i.leave_balance.privilage_leave_balance == 0:
+                    return HttpResponse("privilage leave balance is zero")
                 i.leave.privilage_leave = request.POST["number_of_leaves"]
                 i.leave_balance.privilage_leave_balance -= int(i.leave.privilage_leave)
             if request.POST["leave_type"] == "PATERNITY_LEAVE":
@@ -169,11 +161,11 @@ def edit_user(request,id):
 
 
 
-
-
-
-
-
+# def manager_emp_list(request):
+#     obj = OurUser.objects.all()
+#     for i in obj:
+#         print("request.user.role--->",i.role)
+        
 
     
    

@@ -11,13 +11,10 @@ class leave_form(ModelForm):
     end_Date = forms.DateField(label="to", required=True, widget =forms.DateInput(attrs={"type":"date"}))
     type_of_leave = forms.ChoiceField(label="leave type",  choices=leave_type)
     
-  
-
 
     class Meta:
         model = leave
         fields = "__all__"
         exclude = ["sick_leave", "casual_leave", "privilage_leave","general_election","paternity_leave"]
    
-    
     

@@ -5,8 +5,8 @@ from leave.models import leave_balance, leave, holiday_leaves
 # Create your models here.
 
 
-department = (("DEVELOPMENT","development"), ("BACK_OFFICE", "back_office"),("DISPTCH","dispatch"),("FIELD_ENGINEERS","field_engineers"),("ACCOUNTS","accounts"))
-role_choice = (("MASTER","master"),("MANAGER","MANAGER"),("TEAM_MEMBER","team_member"), ("FIELD_WORKER","field_worker"))
+
+role_choice = (("MASTER","master"),("MANAGER","MANAGER"),("TEAM_MEMBER","team_member"))
 marital_status = (("MARRIED","married"),("UNMARRIED","unmarried"))
 gender_choice = (("MALE","male"), ("FEMALE","female"))
 fy_year = (("2022-2023","2022-2023"),("2021-2022","2021-2022"))
@@ -19,7 +19,7 @@ class OurUser(User):
     emp_id = models.IntegerField()
     emp_name = models.CharField(max_length=100)
     gender = models.CharField(max_length=20, choices=gender_choice)
-    department = models.CharField(max_length=20,choices=department,default="add department")
+    department = models.CharField(max_length=20,default="add department")
     designation = models.CharField(max_length=50)
     role = models.CharField(max_length=20, choices=role_choice, null=True)
     marital_status = models.CharField(max_length=50, choices=marital_status)
@@ -31,7 +31,7 @@ class OurUser(User):
 
     
     def __str__(self) :
-        return f"{self.first_name}"
+        return f"{self.first_name} ---> {self.role} ---> {self.reporting_manager_name}"
 
 
 
