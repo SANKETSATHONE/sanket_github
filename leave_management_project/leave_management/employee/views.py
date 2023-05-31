@@ -12,6 +12,7 @@ from employee.models import OurUser
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
+from leave.models import holiday_leaves
 
 
 def sign_up_user(request):
@@ -108,10 +109,17 @@ def get_leave(request):
             if request.POST["leave_type"] == "PRIVILAGED_LEAVE":
                 i.leave.privilage_leave = request.POST["number_of_leaves"]
                 i.leave_balance.privilage_leave_balance -= int(i.leave.privilage_leave)
-            print("sick_leave_blance",i.leave_balance.sick_leave_balance )
-            i.leave_balance.total_leave_balance -= (int(i.leave.sick_leave)+int(i.leave.casual_leave)+int(i.leave.privilage_leave))
+            if request.POST["leave_type"] == "PATERNITY_LEAVE":
+                if int(request.POST["number_of_leaves"]) > 1:
+                    return HttpResponse("paernity leave application can't be greater than one")
+                i.leave.paternity_leave = request.POST["number_of_leaves"] 
+                i.leave_balance.paternity_leave_balance -= int(i.leave.paternity_leave)
+
+
+            i.leave_balance.total_leave_balance -= (int(i.leave.sick_leave)+int(i.leave.casual_leave)+int(i.leave.privilage_leave)+int(i.leave.paternity_leave))
+
             form.save()
-            send_leave_mail(i.email,f"leave applied by {request.user.username}")
+            send_leave_mail(i.email,f"leave applied by {request.user.first_name}")
            
             i.leave_balance.save()
         return render(request, "leave.html",{"form":data_leave})
@@ -140,6 +148,24 @@ def profile_page(request,id):
     return render(request, "profile.html",{"form":form})
 
 
+
+def holiday_list(request):
+    obj = holiday_leaves.objects.order_by("event_date").all()
+    return render(request, "holiday.html", {"form":obj})
+
+
+
+def edit_all_user(request):
+    form = OurUser.objects.all()
+    # form =OurUser.objects.get(emp_id =request.user.id)
+    return render(request, "edit.html",{"form":form} )
+
+
+def edit_user(request,id):
+   # form = OurUser.objects.get(id=request.user.emp_id)
+   form = OurUser.objects.get(id=request.user.id)
+   print("id --->", request.user.id)
+   return render(request, "sign_up.html",{"form":form})
 
 
 

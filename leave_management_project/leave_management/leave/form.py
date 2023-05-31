@@ -17,7 +17,7 @@ class leave_form(ModelForm):
     class Meta:
         model = leave
         fields = "__all__"
-        exclude = ["sick_leave", "casual_leave", "privilage_leave"]
+        exclude = ["sick_leave", "casual_leave", "privilage_leave","general_election","paternity_leave"]
    
     
     

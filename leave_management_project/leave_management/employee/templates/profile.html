@@ -8,19 +8,38 @@
     <title>Document</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
         integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <style>
+        .button {
+            display:ruby;
+            width: 115px;
+            height: 25px;
+            background: #dee2e7;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px;
+            font-weight: bold;
+            line-height: 30px;
+             
+        }
+    </style>
 </head>
 
 <body>
+
     <div class="container">
         <ul class="nav nav-tabs">
             <li role="presentation" class="active"><a href="/sign_in">
                     <h2>Home page </h2>
                 </a></li>
-            <li role="presentation"><a href="/sign_up">
-                    <h2> Sign up </h2>
-                </a></li>
+
             <li role="presentation"><a href="/leave">
                     <h2> Apply leave </h2>
+                </a></li>
+            <li role="presentation"><a href="/change_pass">
+                    <h2> change password </h2>
+                </a></li>
+            <li role="presentation"><a href="/holiday">
+                    <h2> holiday list</h2>
                 </a></li>
         </ul>
 
@@ -28,9 +47,9 @@
         <form>
             {% csrf_token %}
             <h1>Name - {{form.first_name}}</h1>
-            <img src="{{ upload/1.url }}" alt="Smiley face" width="250" height="250">
+
             <br />
-            
+
 
             <table class="table table-bordered">
                 <tr>
@@ -85,7 +104,17 @@
 
             </table>
 
+            {% if perms.employee.add_ouruser%}
+            <a class="button" href="/sign_up"> Add user</a>
+            {% endif %}
+            <br><br>
+            <p></p>
+            {% if perms.employee.change_ouruser%}
+            <a class="button" href="/edit_all_user"> Edit user</a>
+            {% endif %}
+
         </form>
+
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
